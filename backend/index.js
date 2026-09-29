@@ -8,10 +8,28 @@ import cookieParser from "cookie-parser"
 const app = e()
 
 app.use(e.json())
+
+// app.use(cors({
+//     origin: function (origin, callback) {
+//         if (!origin || origin.includes('vercel.app') || origin.includes('localhost')) {
+//             callback(null, true);
+//         } else {
+//             callback(null, true);
+//         }
+//     },
+//     credentials: true
+// }))
+
 app.use(cors({
-    origin: 'http://localhost:5173',
-    credentials: true
+    origin: function (origin, callback) {
+        return callback(null, true);
+    },
+    credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization']
 }))
+
+
 app.use(cookieParser())
 
 app.post("/login", async (req, resp) => {

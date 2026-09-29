@@ -9,17 +9,6 @@ const app = e()
 
 app.use(e.json())
 
-// app.use(cors({
-//     origin: function (origin, callback) {
-//         if (!origin || origin.includes('vercel.app') || origin.includes('localhost')) {
-//             callback(null, true);
-//         } else {
-//             callback(null, true);
-//         }
-//     },
-//     credentials: true
-// }))
-
 app.use(cors({
     origin: function (origin, callback) {
         return callback(null, true);
@@ -32,6 +21,13 @@ app.use(cors({
 
 app.use(cookieParser())
 
+const cookieOptions = {
+    httpOnly: true,
+    secure: true,     
+    sameSite: 'none', 
+    maxAge: 5 * 24 * 60 * 60 * 1000 
+}
+
 app.post("/login", async (req, resp) => {
     const userData = req.body
     if (userData.email && userData.password) {
@@ -40,6 +36,7 @@ app.post("/login", async (req, resp) => {
         const result = await collection.findOne({ email: userData.email, password: userData.password })
         if (result) {
             jwt.sign({ userId: result._id, email: result.email }, 'Google', { expiresIn: '5d' }, (error, token) => {
+                resp.cookie('token', token, cookieOptions)
                 resp.send({
                     success: true,
                     msg: 'login done',
@@ -70,7 +67,8 @@ app.post("/signup", async (req, resp) => {
         const collection = await db.collection('users')
         const result = await collection.insertOne(userData)
         if (result) {
-           jwt.sign({ userId: result.insertedId, email: userData.email }, 'Google', { expiresIn: '5d' }, (error, token) => {
+            jwt.sign({ userId: result.insertedId, email: userData.email }, 'Google', { expiresIn: '5d' }, (error, token) => {
+                resp.cookie('token', token, cookieOptions)
                 resp.send({
                     success: true,
                     msg: 'signup done',
@@ -171,6 +169,14 @@ app.delete("/delete-multiple",verifyJWTToken, async (req, resp) => {
 
 function verifyJWTToken(req, resp, next) {
     const token = req.cookies['token']
+
+    if (!token) {
+        return resp.send({
+            msg: "token missing",
+            success: false
+        })
+    }
+
     jwt.verify(token, 'Google', (error, decoded) => {
         if(error){
             return resp.send({
@@ -179,9 +185,8 @@ function verifyJWTToken(req, resp, next) {
             })
         }
         req.userId = decoded.userId
-    next()
+        next()
     })
-
 }
 
 app.listen(3200)

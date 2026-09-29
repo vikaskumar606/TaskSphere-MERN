@@ -12,7 +12,7 @@ export default function  handleUpdateTask(){
     },[])
          
     const getTask =async(id)=>{        
-        let task = await fetch(`http://localhost:3200/task/`+id,{
+        let task = await fetch(`https://tasksphere-backend-kpyz.onrender.com/task/`+id,{
             credentials: 'include'
         })
         task = await task.json()
@@ -25,7 +25,7 @@ export default function  handleUpdateTask(){
 
     const handleUpdateTask = async ()=>{
         console.log("function called",taskData);
-        let task = await fetch("http://localhost:3200/update-task",{
+        let task = await fetch("https://tasksphere-backend-kpyz.onrender.com/update-task",{
             method:'put',
             body:JSON.stringify(taskData),
             headers:{

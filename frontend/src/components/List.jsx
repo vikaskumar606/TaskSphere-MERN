@@ -12,7 +12,7 @@ export default function List() {
         getListData()
     }, [])
     const getListData = async () => {
-        let list = await fetch('http://localhost:3200/tasks', {
+        let list = await fetch('https://tasksphere-backend-kpyz.onrender.com/tasks', {
             credentials: 'include'
         })
         list = await list.json()
@@ -25,7 +25,7 @@ export default function List() {
     }
 
     const deleteTask = async (id) => {
-        let item = await fetch('http://localhost:3200/delete/' + id, { method: 'delete', credentials: 'include' })
+        let item = await fetch('https://tasksphere-backend-kpyz.onrender.com/delete/' + id, { method: 'delete', credentials: 'include' })
         item = await item.json()
         console.log(item)
         if (item.success) {
@@ -59,7 +59,7 @@ export default function List() {
 
     const deleteMultiple = async () => {
         console.log(selectedTask);
-        let item = await fetch('http://localhost:3200/delete-multiple/',
+        let item = await fetch('https://tasksphere-backend-kpyz.onrender.com/delete-multiple/',
             {
                 credentials: 'include',
                 method: 'delete',

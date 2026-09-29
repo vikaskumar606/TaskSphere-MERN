@@ -9,7 +9,7 @@ export default function  AddTask(){
     
     const handleAddTask = async ()=>{
         console.log(taskData);
-        let result = await fetch('http://localhost:3200/add-task',{
+        let result = await fetch('https://tasksphere-backend-kpyz.onrender.com/add-task',{
             method:'Post',
             body:JSON.stringify(taskData),
             credentials:'include',

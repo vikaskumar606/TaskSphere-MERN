@@ -1,0 +1,71 @@
+.container {
+  max-width: 460px;
+  width: 90%;
+  margin: 50px auto;
+  padding: 2.2rem;
+  background: var(--surface);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-md);
+  border: 1px solid var(--border-color);
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 1.6rem;
+  color: var(--text-main);
+  font-size: 1.6rem;
+  font-weight: 700;
+  letter-spacing: -0.3px;
+}
+
+label {
+  font-weight: 600;
+  display: block;
+  color: #334155;
+  margin-bottom: 6px;
+  font-size: 0.88rem;
+}
+
+input, textarea {
+  width: 100%;
+  padding: 0.7rem 0.9rem;
+  margin-bottom: 1.2rem;
+  border: 1px solid var(--border-color);
+  border-radius: 7px;
+  font-size: 0.95rem;
+  font-family: inherit;
+  color: var(--text-main);
+  background-color: #ffffff;
+  transition: all 0.2s ease;
+  outline: none;
+}
+
+input:focus, textarea:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+}
+
+button.submit {
+  width: 100%;
+  padding: 0.75rem;
+  background-color: var(--primary);
+  color: #ffffff;
+  border: none;
+  border-radius: 7px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  font-weight: 600;
+  transition: all 0.2s ease;
+  margin-top: 0.4rem;
+}
+
+button.submit:hover {
+  background-color: var(--primary-hover);
+}
+
+@media (max-width: 480px) {
+  .container {
+    margin: 25px auto;
+    padding: 1.4rem;
+  }
+}

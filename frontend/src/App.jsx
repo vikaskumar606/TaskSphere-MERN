@@ -1,4 +1,4 @@
-import './style/app.css'
+import './style/App.css'
 import NavBar from "./components/NavBar.jsx";
 import { Routes, Route } from "react-router-dom"
 import AddTask from './components/AddTask'

@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import '../style/addtask.css'
 import { useNavigate, useParams } from "react-router-dom" 
 
-export default function  handleUpdateTask(){
+export default function  UpdateTask(){
     const [taskData,setTaskData]=useState()
     const navigate = useNavigate()
     const {id} = useParams()    
@@ -26,10 +26,10 @@ export default function  handleUpdateTask(){
     const handleUpdateTask = async ()=>{
         console.log("function called",taskData);
         let task = await fetch("https://tasksphere-backend-kpyz.onrender.com/update-task",{
-            method:'put',
+            method:'PUT',
             body:JSON.stringify(taskData),
             headers:{
-                'Content-Type':'Application/json'
+                'Content-Type':'application/json'
             },
             credentials: 'include'
         }) 

@@ -28,7 +28,7 @@ export default function  AddTask(){
     }
     return(
         <div className="container" >
-            <h1>Add New Task 2</h1>
+            <h1>Add New Task </h1>
             
                 <label htmlFor="">Titel</label>
                 <input onChange={(event)=>setTaskData({...taskData,title:event.target.value})} type="text" name="title"  placeholder="Enter task title" />

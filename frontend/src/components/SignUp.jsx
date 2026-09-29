@@ -46,7 +46,7 @@ export default function  SignUp(){
 
                 <label htmlFor="">Password</label>
                 <input onChange={(event)=>setUserData({...userData,password:event.target.value})} 
-                type="text" name="password"  placeholder="Enter user password" />
+                type="password" name="password"  placeholder="Enter user password" />
 
                 <button onClick={handleSignUp}  className="submit" >Sign up</button>
                 <Link className='link'  to="/login" >Login</Link>

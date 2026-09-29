@@ -1,42 +1,58 @@
-import { useState } from 'react'
-import '../style/addtask.css'
-import { useNavigate } from "react-router-dom" 
+import React, { useState } from "react";
+import '../style/addtask.css';
+import '../style/App.css';
+import API from "../api";
+import { useNavigate } from "react-router-dom";
 
-export default function  AddTask(){
-    const [taskData,setTaskData]=useState()
-    const navigate = useNavigate()
+const AddTask = () => {
+  const [taskData, setTaskData] = useState({ title: "", description: "" });
+  const navigate = useNavigate();
 
-    
-    const handleAddTask = async ()=>{
-        console.log(taskData);
-        let result = await fetch('https://tasksphere-backend-kpyz.onrender.com/add-task',{
-            method:'Post',
-            body:JSON.stringify(taskData),
-            credentials:'include',
-            headers:{
-                'Content-Type':'Application/Json'
-            }
-        })
-        result = await result.json()
-        if(result.success){
-            navigate("/")
-            console.log("new task added");            
-        }else{
-            alert("try after sometime")
+  const handleChange = (e) => {
+    setTaskData({ ...taskData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    API.post("/add-task", taskData)
+      .then((res) => {
+        if (res.data.success) {
+          setTaskData({ title: "", description: "" });
+          navigate("/");
+        } else {
+          alert("Task not added");
         }
-        
-    }
-    return(
-        <div className="container" >
-            <h1>Add New Task </h1>
-            
-                <label htmlFor="">Titel</label>
-                <input onChange={(event)=>setTaskData({...taskData,title:event.target.value})} type="text" name="title"  placeholder="Enter task title" />
-                <label htmlFor="">Description</label>
-                <textarea onChange={(event)=>setTaskData({...taskData,description:event.target.value})} rows={4} name="description" placeholder="Enter task description" id=""></textarea>
-                <button onClick={handleAddTask} className="submit" >Add New Task</button>
-           
-        </div>
+      })
+      .catch((err) => console.log(err));
+  };
 
-    )
-}
+  return (
+    <div className="container">
+      <h1>Add New Task</h1>
+      <form onSubmit={handleSubmit}>
+        <label>Titel</label>
+        <input
+          type="text"
+          name="title"
+          placeholder="Enter task title"
+          value={taskData.title}
+          onChange={handleChange}
+          required
+        />
+        
+        <label>Description</label>
+        <textarea
+          name="description"
+          placeholder="Enter task description"
+          value={taskData.description}
+          onChange={handleChange}
+          rows={4}
+        />
+        
+        <button type="submit" className="submit">Add New Task</button>
+      </form>
+    </div>
+  );
+};
+
+export default AddTask;
